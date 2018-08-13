@@ -1,5 +1,6 @@
 import scala.io.StdIn
 
+// http://aperiodic.net/phil/scala/s-99/
 object ListProblems1to28 {
 
 /** Problem 1: Find the last element of a list.
