@@ -2,7 +2,6 @@ import scala.io.StdIn
 
 object ListProblems1to28 {
 
-
 /** Problem 1: Find the last element of a list.
   *
   */
@@ -36,19 +35,65 @@ object ListProblems1to28 {
     }
   }
 
+  /** Problem 4: Find the number of elements of a list
+    *
+    */
+  def length(nums: List[Int]): Int = {
+    var counter = 0
+    for(_ <- nums) counter+=1
+    counter
+  }
+
+  /** Problem 5: Reverse a list
+    *
+    */
+  def reverse(nums: List[Int]): List[Int] = {
+    val reversed = for(x <- nums.length-1 to 0 by -1) yield nums(x)
+    reversed.toList
+  }
+
+  /** Problem 6: Find out whether a list is a palindrome
+    *
+    */
+  def isPalindrome(nums: List[Int]): Boolean = {
+    nums == reverse(nums)
+  }
+
+  /** Problem 7: Flatten a nested list structure.
+    *
+    */
+  def flatten(nums: List[Any]): List[Int] = {
+     if(nums.isEmpty){
+        List()
+      }else{
+        nums.head match {
+          case x: Int => x::flatten(nums.tail)
+          case x: List[Any] => flatten(x) ::: flatten(nums.tail)
+        }
+      }
+    }
+
   def main(args: Array[String]): Unit = {
     val inputList: List[Int] =  StdIn.readLine()
       .split(" ")
       .map(_.toInt)
       .toList
 
-    var res = last(inputList)
-    print(res)
+    var res = 0
+//    res = last(inputList)
+//    res = penultimate(inputList)
+//    res = nth(inputList.head, inputList.tail)
+//    res = length(inputList)
+//    print(res)
 
-    res = penultimate(inputList)
-    print(res)
+//    val resList = reverse(inputList)
+//    print(resList)
+//
+//    val isInputPalindrome = isPalindrome(inputList)
+//    print(isInputPalindrome)
 
-    res = nth(inputList.head, inputList.tail)
-    print(res)
+    val nestedList = List(List(1,1), 2, List(3, List(5,8)))
+    val flattenedList = flatten(nestedList)
+    print(flattenedList)
   }
 }
