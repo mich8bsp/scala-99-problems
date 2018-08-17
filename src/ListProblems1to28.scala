@@ -110,6 +110,22 @@ object ListProblems1to28 {
 
     encode(pack(list))
   }
+
+  /** Problem 11: Modified run-length encoding.
+    *
+    */
+  def encodeModified(list: List[Symbol]): List[Any] = {
+    def modifyEncoded(encodedList: List[(Int, Symbol)]): List[Any] = {
+      encodedList match {
+        case Nil => Nil
+        case (1,x)::xs => x::modifyEncoded(xs)
+        case x::xs => x::modifyEncoded(xs)
+      }
+    }
+
+    modifyEncoded(encode(list))
+  }
+
   def main(args: Array[String]): Unit = {
 //    val inputList: List[Int] =  StdIn.readLine()
 //      .split(" ")
@@ -137,5 +153,6 @@ object ListProblems1to28 {
     println(compress(listWithDups))
     println(pack(listWithDups))
     println(encode(listWithDups))
+    println(encodeModified(listWithDups))
   }
 }
