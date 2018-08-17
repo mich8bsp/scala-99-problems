@@ -74,13 +74,49 @@ object ListProblems1to28 {
       }
     }
 
-  def main(args: Array[String]): Unit = {
-    val inputList: List[Int] =  StdIn.readLine()
-      .split(" ")
-      .map(_.toInt)
-      .toList
+  /** Problem 8: Eliminate consecutive duplicates of list elements.
+    *
+    */
+  def compress(list: List[Symbol]): List[Symbol] = {
+    list match {
+      case Nil => Nil
+      case h::t::xs => if (h==t) compress(h::xs) else h::compress(t::xs)
+      case c::xs => c::compress(xs)
+    }
+  }
 
-    var res = 0
+  /** Problem 9: Pack consecutive duplicates of list elements into sublists.
+    *
+    */
+  def pack(list: List[Symbol]): List[List[Symbol]] = {
+    if (list == Nil || list.isEmpty){
+      List(List())
+    }else{
+      val (currSubSeq, rest) = list.span(_ == list.head)
+      if (rest == Nil) currSubSeq::Nil else currSubSeq::pack(rest)
+    }
+  }
+
+  /** Problem 10: Run-length encoding of a list.
+    *
+    */
+  def encode(list: List[Symbol]) : List[(Int, Symbol)] = {
+    def encode(packedList: List[List[Symbol]]): List[(Int, Symbol)] = {
+      packedList match {
+        case Nil => Nil
+        case x::xs => (x.length, x.head)::encode(xs)
+      }
+    }
+
+    encode(pack(list))
+  }
+  def main(args: Array[String]): Unit = {
+//    val inputList: List[Int] =  StdIn.readLine()
+//      .split(" ")
+//      .map(_.toInt)
+//      .toList
+//
+//    var res = 0
 //    res = last(inputList)
 //    res = penultimate(inputList)
 //    res = nth(inputList.head, inputList.tail)
@@ -93,8 +129,13 @@ object ListProblems1to28 {
 //    val isInputPalindrome = isPalindrome(inputList)
 //    print(isInputPalindrome)
 
-    val nestedList = List(List(1,1), 2, List(3, List(5,8)))
-    val flattenedList = flatten(nestedList)
-    print(flattenedList)
+//    val nestedList = List(List(1,1), 2, List(3, List(5,8)))
+//    val flattenedList = flatten(nestedList)
+//    print(flattenedList)
+
+    val listWithDups = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
+    println(compress(listWithDups))
+    println(pack(listWithDups))
+    println(encode(listWithDups))
   }
 }
